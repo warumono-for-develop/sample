@@ -2,16 +2,61 @@
 <html>
     <head>
         <title>Sample</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <p>This is an example of a simple HTML page with one paragraph.</p>
+        <p>This is an example of a simple HTML page with one paragraph. bbb</p>
+        <a href="https://warumono-for-develop.github.io/sample/sample.html" target="_blink">https://warumono-for-develop.github.io/sample/sample.html</a>
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <div id="data"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
 
         <script>
 
-			$(document).ready(function() {
+            var doc;
+
+            $(window).load(function() {
                 console.warn('ready');
+
+                // $.getJSON("https://www.foresttrip.go.kr/rep/or/selectRsrvtAvailInfoListForMonthRsrvt.do", function(data) {
+                //     var data = $(data);
+                //     //do something
+                //     $("#data").html(data);
+                // });
+
+                // $.getJSON('https://www.foresttrip.go.kr/rep/or/selectRsrvtAvailInfoListForMonthRsrvt.do&callback=?')
+                // .done(function (data) {
+                //     console.info(data);
+                //     // 2. All that getData is doing is call that function using the
+                //     //    reference you sent when it's done. Like any other function
+                //     //    you can pass it arguments.
+                // })
+                // .fail(function (jqXHR, textStatus, err) {
+                //     console.error(err);
+                // });
+
+                $.ajax('https://www.foresttrip.go.kr/rep/or/selectRsrvtAvailInfoListForMonthRsrvt.do', {
+                    type: 'post', 
+                    data: { insttId: 'ID02030087' }, 
+                    dataType: 'json', 
+                    crossOrigin: true, 
+                    async: false, 
+                    cache: false, 
+                    beforeSend: function (xhr) { xhr.setRequestHeader('X-Ajax-call', 'true'); },
+                })
+                .success(function (data, textStatus, xhr) {
+                    console.info(data);
+                })
+                .fail(function (data, textStatus, errorThrown) {
+                    console.error(errorThrown);
+
+                    return false;
+                })
+                .always(function () {
+                    console.warn('xxxx aaa');
+                });
 			});
 
 			////////////////////////////////////////
